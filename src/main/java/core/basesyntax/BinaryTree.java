@@ -22,8 +22,18 @@ public class BinaryTree {
     }
 
     /* Given a binary tree, print its nodes according to the 
-      "bottom-up" post order traversal. */
+      "bottom-up" post order traversal. (left - right - root)*/
     public List<Node> getNodesPostOrder(Node node) {
+        List<Node> listNodesOfTree = new ArrayList<>();
+        if (node != null) {
+            listNodesOfTree.addAll(getNodesPostOrder(node.getLeft()));
+            listNodesOfTree.addAll(getNodesPostOrder(node.getRight()));
+            listNodesOfTree.add(node);
+        }
+        return listNodesOfTree;
+    }
+
+    public List<Node> getNodesPostOrderSecondWay(Node node) {
         List<Node> listNodesOfTree = new ArrayList<>();
         postOrder(node, listNodesOfTree);
         return listNodesOfTree;
@@ -38,9 +48,18 @@ public class BinaryTree {
         listOfNodes.add(node);
     }
 
-
-    /* Given a binary tree, print its nodes in inorder*/
+    /* Given a binary tree, print its nodes in inorder(left - root - right)*/
     public List<Node> getNodesInorder(Node node) {
+        List<Node> listNodesOfTree = new ArrayList<>();
+        if (node != null) {
+            listNodesOfTree.addAll(getNodesPostOrder(node.getLeft()));
+            listNodesOfTree.add(node);
+            listNodesOfTree.addAll(getNodesPostOrder(node.getRight()));
+        }
+        return listNodesOfTree;
+    }
+
+    public List<Node> getNodesInorderSecondWay(Node node) {
         List<Node> listElementsOfTree = new ArrayList<>();
         inOrder(node, listElementsOfTree);
         return listElementsOfTree;
@@ -55,8 +74,18 @@ public class BinaryTree {
         inOrder(node.getRight(), listOfNodes);
     }
 
-    /* Given a binary tree, print its nodes in pre order*/
+    /* Given a binary tree, print its nodes in pre order (root - left - right)*/
     public List<Node> getNodesPreOrder(Node node) {
+        List<Node> listNodesOfTree = new ArrayList<>();
+        if (node != null) {
+            listNodesOfTree.add(node);
+            listNodesOfTree.addAll(getNodesPostOrder(node.getLeft()));
+            listNodesOfTree.addAll(getNodesPostOrder(node.getRight()));
+        }
+        return listNodesOfTree;
+    }
+
+    public List<Node> getNodesPreOrderSecondWay(Node node) {
         List<Node> listElementsOfTree = new ArrayList<>();
         preOrder(node, listElementsOfTree);
         return listElementsOfTree;
