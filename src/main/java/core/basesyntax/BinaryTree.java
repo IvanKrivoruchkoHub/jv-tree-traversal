@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Stack;
 
 public class BinaryTree {
     // Root of Binary Tree
@@ -48,6 +49,23 @@ public class BinaryTree {
         listOfNodes.add(node);
     }
 
+    public List<Node> getNodesPostOrderRecursion(Node node) {
+        Stack<Node> stack = new Stack<>();
+        List<Node> nodes = new ArrayList<>();
+        stack.push(node);
+        while (!stack.empty()) {
+            Node tempNode = stack.pop();
+            nodes.add(0, tempNode);
+            if (tempNode.getLeft() != null) {
+                stack.add(tempNode.getLeft());
+            }
+            if (tempNode.getRight() != null) {
+                stack.add(tempNode.getRight());
+            }
+        }
+        return nodes;
+    }
+
     /* Given a binary tree, print its nodes in inorder(left - root - right)*/
     public List<Node> getNodesInorder(Node node) {
         List<Node> listNodesOfTree = new ArrayList<>();
@@ -74,6 +92,22 @@ public class BinaryTree {
         inOrder(node.getRight(), listOfNodes);
     }
 
+    public List<Node> getNodesInorderRecursion(Node node) {
+        Stack<Node> stack = new Stack<>();
+        List<Node> nodes = new ArrayList<>();
+        Node tempNode = node;
+        while (tempNode != null || !stack.empty()) {
+            while (tempNode != null) {
+                stack.push(tempNode);
+                tempNode = tempNode.getLeft();
+            }
+            tempNode = stack.pop();
+            nodes.add(tempNode);
+            tempNode = tempNode.getRight();
+        }
+        return nodes;
+    }
+
     /* Given a binary tree, print its nodes in pre order (root - left - right)*/
     public List<Node> getNodesPreOrder(Node node) {
         List<Node> listNodesOfTree = new ArrayList<>();
@@ -98,6 +132,24 @@ public class BinaryTree {
         listOfNodes.add(node);
         preOrder(node.getLeft(), listOfNodes);
         preOrder(node.getRight(), listOfNodes);
+    }
+
+    public List<Node> getNodesPreOrderRecursion(Node node) {
+        Stack<Node> stack = new Stack<>();
+        List<Node> nodes = new ArrayList<>();
+        stack.push(node);
+        while (!stack.empty()) {
+            Node tempNode = stack.pop();
+            nodes.add(0, tempNode);
+            if (tempNode.getRight() != null) {
+                stack.add(tempNode.getRight());
+            }
+
+            if (tempNode.getLeft() != null) {
+                stack.add(tempNode.getLeft());
+            }
+        }
+        return nodes;
     }
 
     /* Given a binary tree, print its nodes in pre order*/
